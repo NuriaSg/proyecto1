@@ -1,8 +1,9 @@
 global using proyecto1.Shared;
 global using Microsoft.EntityFrameworkCore;
 global using proyecto1.Server.Data;
-
+global using proyecto1.Server.Services.ProductService;
 using Microsoft.AspNetCore.ResponseCompression;
+using proyecto1.Server.Services.ProductService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,8 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddScoped<IProductService, ProductService>();
 
 var app = builder.Build();
 

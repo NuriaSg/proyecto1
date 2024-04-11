@@ -1,28 +1,54 @@
-﻿@inject HttpClient Http
-<h3>ProductList</h3>
+﻿@inject IProductService ProductService
+
+
+
+
+@if(ProductService.Products == null || ProductService.Products.Count == 0)
+{
+	<MudProgressCircular Indeterminate="true" />
+
+}
+else{
 
 
 <MudPaper Width="600px">
 	<MudList>
-		@foreach (var product in Products)
+		@foreach (var product in ProductService.Products)
 		{
 			<MudListItem class="title" Text="@product.Title"/>
-			<MudImage Src="@product.Image" Alt="@product.Title" Elevation="25" Width="200" />
+			<a href="/product/@product.Id" target="_blank">
+			<MudImage id="img" Src="@product.Image" Alt="@product.Title" Elevation="25" Width="200" />
+			</a>
 			<MudListItem Text="@product.Description" />
-			<MudListItem  Text="@product.Price.ToString()" />
+			<MudListItem class="price" Text="@product.Price.ToString()" />
 
 		}
 	</MudList>
 </MudPaper>
+}
 
+<style type="text/css">
+
+
+	#img {
+		transition: transform .2s;
+	}
+
+	#img:hover {
+		transform: scale(1.1);
+	}
+
+	.title {
+		font-size: 30px;
+		font-style: oblique;
+		background-color: lavender;
+		margin-bottom: 20px;
+	}
+</style>
 @code {
-	private static List<Product> Products = new List<Product>();
-
 	protected override async Task OnInitializedAsync()
 	{
-		var result = await Http.GetFromJsonAsync<List<Product>>("api/Product");
-		if (result != null)
-			Products = result;
+		await ProductService.GetProducts();
 	}
 	
 		

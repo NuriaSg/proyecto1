@@ -5,7 +5,6 @@ html, body {
 }
 
 h1:focus {
-    outline: none;
 }
 
 a, .btn-link {
@@ -62,4 +61,11 @@ a, .btn-link {
     .blazor-error-boundary::after {
         content: "An error has occurred."
     }
+
+
+
+.price{
+    color:green;
+    margin-bottom:20px;
+}
 

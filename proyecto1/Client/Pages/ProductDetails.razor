@@ -1,0 +1,64 @@
+﻿@page "/product/{id:int}"
+@inject IProductService ProductService
+
+@if(product == null)
+{
+	<span>@message</span>
+}
+else
+{
+	<MudPaper Width="1000px">
+		<MudList id="parent">
+			<MudImage Src="@product.Image" Alt="@product.Title" Elevation="25" Width="200" />
+			<div id="info">
+			<MudListItem id="titleD" Text="@product.Title" />
+			<MudListItem  Text="@product.Description" />
+			<MudListItem class="price" Text="@product.Price.ToString()" />
+			</div>
+		</MudList>
+		
+	</MudPaper>
+
+}
+
+<style>
+	#parent{
+		display:flex;
+		
+	}
+	#info{
+		margin-left:40px;
+		margin-top: 20px;
+		font-size: 18px;
+		
+	}
+
+	#titleD{
+		font-size: 25px;
+		font-style:oblique;
+	}
+
+</style>
+
+
+@code {
+	private Product product = null;
+	private string message = string.Empty;
+
+	[Parameter]
+	public int Id { get; set; }
+
+	protected override async Task OnParametersSetAsync()
+	{
+		message = "Loading product...";
+		var result = await ProductService.GetProduct(Id);
+		if(!result.Success)
+		{
+			message = result.Message;
+		}
+		else
+		{
+			product = result.Data;
+		}
+	}
+}
