@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
+//Controlador de los servicios de Productos
+
+
 namespace proyecto1.Server.Controllers
 {
 	[Route("api/[controller]")]
@@ -15,6 +18,7 @@ namespace proyecto1.Server.Controllers
 			_productService = productService;
 		}
 
+		//enlaces a todos los metodos creados en el service
 		[HttpGet]
 		public async Task<ActionResult<ServiceResponse<List<Product>>>> GetProducts()
 		{
@@ -29,6 +33,13 @@ namespace proyecto1.Server.Controllers
 			var result = await _productService.GetProductAsync(productId);
 			return Ok(result);
 		}
-	}
+
+		[HttpGet("category/{categoryUrl}")]
+        public async Task<ActionResult<ServiceResponse<List<Product>>>> GetProductSByCategory(string categoryUrl)
+        {
+            var result = await _productService.GetProductsByCategory(categoryUrl);
+            return Ok(result);
+        }
+    }
 
 }

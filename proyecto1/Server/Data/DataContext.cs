@@ -1,5 +1,6 @@
 ﻿namespace proyecto1.Server.Data
 {
+	//Clase para introducir todos los objetos a la base de datos
 	public class DataContext : DbContext
 	{
         public DataContext(DbContextOptions<DataContext>options): base(options)

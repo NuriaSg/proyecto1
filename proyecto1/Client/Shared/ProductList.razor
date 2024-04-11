@@ -1,5 +1,5 @@
 ﻿@inject IProductService ProductService
-
+@implements IDisposable
 
 
 
@@ -46,11 +46,14 @@ else{
 	}
 </style>
 @code {
-	protected override async Task OnInitializedAsync()
+	protected override void OnInitialized()
 	{
-		await ProductService.GetProducts();
+		ProductService.ProductsChanged += StateHasChanged; //llama al evento
+
 	}
-	
-		
-	
+
+	public void Dispose()
+	{
+		ProductService.ProductsChanged -= StateHasChanged;
+	}
 }

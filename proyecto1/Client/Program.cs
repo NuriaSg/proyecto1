@@ -1,6 +1,7 @@
 global using proyecto1.Shared;
 global using System.Net.Http.Json;
 global using proyecto1.Client.Services.ProductService;
+global using proyecto1.Client.Services.CategoryService;
 
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -14,5 +15,6 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 builder.Services.AddMudServices();
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ICategoryServer, CategoryService>();
 
 await builder.Build().RunAsync();

@@ -6,6 +6,7 @@ using System.Net.Mime;
 using System.Text;
 using System.Threading.Tasks;
 
+//Clase donde se define la estructura de los productos
 namespace proyecto1.Shared
 {
     public class Product
