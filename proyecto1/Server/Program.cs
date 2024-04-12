@@ -1,8 +1,7 @@
 global using proyecto1.Shared;
 global using Microsoft.EntityFrameworkCore;
 global using proyecto1.Server.Data;
-global using proyecto1.Server.Services.ProductService;
-global using proyecto1.Server.Services.CategoryService;
+
 
 using Microsoft.AspNetCore.ResponseCompression;
 
@@ -15,14 +14,14 @@ builder.Services.AddDbContext<DataContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<IProductService, ProductService>();
-builder.Services.AddScoped<ICategoryService, CategoryService>();
+
 
 var app = builder.Build();
 

@@ -11,18 +11,25 @@ namespace proyecto1.Server.Controllers
 	public class ProductController : ControllerBase
 	{
 		
-		private readonly IProductService _productService;
+		private readonly DataContext _context;
 
-		public ProductController(IProductService productService)
+		public ProductController(DataContext context)
 		{
-			_productService = productService;
-		}
+            _context = context;
+        }
 
-		//enlaces a todos los metodos creados en el service
+		//enlaces a todos los metodos creados en el service GETTER
 		[HttpGet]
 		public async Task<ActionResult<ServiceResponse<List<Product>>>> GetProducts()
 		{
-			var result = await _productService.GetProductsAsync();
+			var result = await _context.Products.ToListAsync();
+			if(result is not null)
+			{
+				foreach(var item in result)
+				{
+					item.Category  = await _context.Categories.FirstOrDefaultAsync(c => c.Id == item.CategoryId);
+				}
+			}
 			return Ok(result);
 		}
 
@@ -30,16 +37,20 @@ namespace proyecto1.Server.Controllers
 		
 		public async Task<ActionResult<ServiceResponse<Product>>> GetProduct(int productId)
 		{
-			var result = await _productService.GetProductAsync(productId);
+			var result = await _context.Products.FirstOrDefaultAsync(c => c.Id == productId);
 			return Ok(result);
 		}
 
 		[HttpGet("category/{categoryUrl}")]
         public async Task<ActionResult<ServiceResponse<List<Product>>>> GetProductSByCategory(string categoryUrl)
         {
-            var result = await _productService.GetProductsByCategory(categoryUrl);
+            var result = await _context.Products.Where(p => p.Category.Url.ToLower()
+			.Equals(categoryUrl.ToLower())).ToListAsync();
             return Ok(result);
         }
+
+      
+       
     }
 
 }

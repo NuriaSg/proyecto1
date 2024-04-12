@@ -1,0 +1,74 @@
+﻿@page "/form"
+@inject ICategoryServer CategoryService
+
+@using System.ComponentModel.DataAnnotations
+
+
+<style>
+    #form{
+        background-color:aliceblue;
+    }
+
+</style>
+
+<h3>Product Form</h3>
+
+<EditForm Model="@newProduct" OnValidSubmit="OnValidSubmit">
+    <DataAnnotationsValidator />
+    <MudGrid >
+        <MudItem xs="12" sm="7">
+            <MudCard id="form">
+                <MudCardContent>
+                    <MudTextField Label="Name" HelperText="Introduce the product name"
+                                  @bind-Value="newProduct.Title" For="@(() => newProduct.Title)" />
+         
+                    <MudTextField Label="Description" HelperText="Introduce the product description"
+                                  @bind-Value="newProduct.Description" For="@(() => newProduct.Description)" />
+              
+                    <MudTextField Label="Price" HelperText="Introduce the price"
+                                  @bind-Value="newProduct.Price" For="@(() => newProduct.Price)" />
+                </MudCardContent>
+
+                <MudCardContent>
+
+                    <MudSelect T="string" Label="Category" AnchorOrigin="Origin.BottomCenter" 
+                    @bind-Value="newProduct.Category.Name">
+
+                        @foreach(var category in CategoryService.Categories)
+                        {
+                            <MudSelectItem Value="@category.Name"  />
+                        }
+                      
+                    </MudSelect>
+                </MudCardContent>
+
+                <MudCardActions>
+                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Save </MudButton>
+                </MudCardActions>
+            </MudCard>
+        </MudItem>
+    </MudGrid>
+</EditForm>
+
+
+@code {
+    bool success;
+    public decimal DecimalValue { get; set; }
+    IList<IBrowserFile> files = new List<IBrowserFile>();
+
+    public Product newProduct = new Product();
+   
+
+    public class RegisterAccountForm
+    {
+        [Required]
+        public string Username { get; set; }
+
+    }
+
+    private async Task OnValidSubmit(EditContext context)
+    {
+        success = true;
+        StateHasChanged();
+    }
+}

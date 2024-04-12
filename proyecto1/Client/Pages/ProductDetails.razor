@@ -1,6 +1,25 @@
 ﻿@page "/product/{id:int}"
 @inject IProductService ProductService
 
+<style>
+	#parent {
+		display: flex;
+	}
+
+	#info {
+		margin-left: 40px;
+		margin-top: 20px;
+		font-size: 18px;
+	}
+
+	#titleD {
+		font-size: 25px;
+		font-style: oblique;
+	}
+
+</style>
+
+
 @if(product == null)
 {
 	<span>@message</span>
@@ -22,24 +41,6 @@ else
 
 }
 
-<style>
-	#parent{
-		display:flex;
-		
-	}
-	#info{
-		margin-left:40px;
-		margin-top: 20px;
-		font-size: 18px;
-		
-	}
-
-	#titleD{
-		font-size: 25px;
-		font-style:oblique;
-	}
-
-</style>
 
 
 @code {

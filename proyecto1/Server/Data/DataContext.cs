@@ -1,4 +1,7 @@
-﻿namespace proyecto1.Server.Data
+﻿using Microsoft.EntityFrameworkCore;
+using proyecto1.Shared;
+
+namespace proyecto1.Server.Data
 {
 	//Clase para introducir todos los objetos a la base de datos
 	public class DataContext : DbContext

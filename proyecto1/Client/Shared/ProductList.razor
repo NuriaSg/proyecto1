@@ -1,7 +1,26 @@
 ﻿@inject IProductService ProductService
 @implements IDisposable
+@inject NavigationManager navManager;
+
+<style type="text/css">
 
 
+	#img {
+		transition: transform .2s;
+		margin-left: 10px;
+	}
+
+		#img:hover {
+			transform: scale(1.1);
+		}
+
+	.title {
+		font-size: 30px;
+		font-style: oblique;
+		background-color: lavender;
+		margin-bottom: 20px;
+	}
+</style>
 
 @if(ProductService.Products == null || ProductService.Products.Count == 0)
 {
@@ -9,7 +28,6 @@
 
 }
 else{
-
 
 <MudPaper Width="600px">
 	<MudList>
@@ -21,31 +39,16 @@ else{
 			</a>
 			<MudListItem Text="@product.Description" />
 			<MudListItem class="price" Text="@product.Price.ToString()" />
+				<MudButton Variant="Variant.Filled" Color="Color.Info" OnClick="@(()=>categoria3(product.Category.Url))">Show category</MudButton>
 
 		}
 	</MudList>
 </MudPaper>
 }
 
-<style type="text/css">
-
-
-	#img {
-		transition: transform .2s;
-	}
-
-	#img:hover {
-		transform: scale(1.1);
-	}
-
-	.title {
-		font-size: 30px;
-		font-style: oblique;
-		background-color: lavender;
-		margin-bottom: 20px;
-	}
-</style>
+ 
 @code {
+	
 	protected override void OnInitialized()
 	{
 		ProductService.ProductsChanged += StateHasChanged; //llama al evento
@@ -55,5 +58,10 @@ else{
 	public void Dispose()
 	{
 		ProductService.ProductsChanged -= StateHasChanged;
+	}
+
+	public void categoria3(string category)
+	{
+		navManager.NavigateTo($"/{category}");
 	}
 }
